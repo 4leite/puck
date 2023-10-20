@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 import { DefaultRootProps } from "@measured/puck";
 import { Footer } from "./components/Footer";
+import { usePathname } from "next/navigation";
 
 export type RootProps = {
   children: ReactNode;
@@ -9,7 +10,7 @@ export type RootProps = {
 } & DefaultRootProps;
 
 const NavItem = ({ label, href }: { label: string; href: string }) => {
-  const navPath = window.location.pathname.replace("/edit", "") || "/";
+  const navPath = usePathname().replace("/edit", "");
 
   const isActive = navPath === (href.replace("/edit", "") || "/");
 
