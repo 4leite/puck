@@ -1,11 +1,13 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import { ComponentConfig } from "@measured/puck";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "@measured/puck/lib";
 import { Button } from "@measured/puck/components/Button";
 import { Section } from "../../components/Section";
 import { quotes } from "./quotes";
+import { ComponentFields } from "../../types";
 
 const getClassName = getClassNameFactory("Hero", styles);
 
@@ -29,7 +31,7 @@ const quotesAdaptor = {
     })),
 };
 
-export const Hero: ComponentConfig<HeroProps> = {
+export const hero: ComponentFields<HeroProps> = {
   fields: {
     _data: {
       type: "external",
@@ -77,75 +79,76 @@ export const Hero: ComponentConfig<HeroProps> = {
     buttons: [{ label: "Learn more", href: "#" }],
     padding: "64px",
   },
-  render: ({
-    align,
-    title,
-    description,
-    buttons,
-    padding,
-    imageUrl,
-    imageMode,
-  }) => {
-    // Empty state allows us to test that components support hooks
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [_] = useState(0);
-
-    return (
-      <Section
-        padding={padding}
-        className={getClassName({
-          left: align === "left",
-          center: align === "center",
-          hasImageBackground: imageMode === "background",
-        })}
-      >
-        {imageMode === "background" && (
-          <>
-            <div
-              className={getClassName("image")}
-              style={{
-                backgroundImage: `url("${imageUrl}")`,
-              }}
-            ></div>
-
-            <div className={getClassName("imageOverlay")}></div>
-          </>
-        )}
-
-        <div className={getClassName("inner")}>
-          <div className={getClassName("content")}>
-            <h1>{title}</h1>
-            <p className={getClassName("subtitle")}>{description}</p>
-            <div className={getClassName("actions")}>
-              {buttons.map((button, i) => (
-                <Button
-                  key={i}
-                  href={button.href}
-                  variant={button.variant}
-                  size="large"
-                >
-                  {button.label}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          {align !== "center" && imageMode !== "background" && imageUrl && (
-            <div
-              style={{
-                backgroundImage: `url('${imageUrl}')`,
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-                borderRadius: 24,
-                height: 356,
-                marginLeft: "auto",
-                width: "100%",
-              }}
-            />
-          )}
-        </div>
-      </Section>
-    );
-  },
 };
+
+export default function Hero({
+  align,
+  title,
+  description,
+  buttons,
+  padding,
+  imageUrl,
+  imageMode,
+}: HeroProps) {
+  // Empty state allows us to test that components support hooks
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [_] = useState(0);
+
+  return (
+    <Section
+      padding={padding}
+      className={getClassName({
+        left: align === "left",
+        center: align === "center",
+        hasImageBackground: imageMode === "background",
+      })}
+    >
+      {imageMode === "background" && (
+        <>
+          <div
+            className={getClassName("image")}
+            style={{
+              backgroundImage: `url("${imageUrl}")`,
+            }}
+          ></div>
+
+          <div className={getClassName("imageOverlay")}></div>
+        </>
+      )}
+
+      <div className={getClassName("inner")}>
+        <div className={getClassName("content")}>
+          <h1>{title}</h1>
+          <p className={getClassName("subtitle")}>{description}</p>
+          <div className={getClassName("actions")}>
+            {buttons.map((button, i) => (
+              <Button
+                key={i}
+                href={button.href}
+                variant={button.variant}
+                size="large"
+              >
+                {button.label}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {align !== "center" && imageMode !== "background" && imageUrl && (
+          <div
+            style={{
+              backgroundImage: `url('${imageUrl}')`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              borderRadius: 24,
+              height: 356,
+              marginLeft: "auto",
+              width: "100%",
+            }}
+          />
+        )}
+      </div>
+    </Section>
+  );
+}

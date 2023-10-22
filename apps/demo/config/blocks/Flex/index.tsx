@@ -1,9 +1,9 @@
 import React from "react";
-import { ComponentConfig } from "@measured/puck/types/Config";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "@measured/puck/lib";
-import { DropZone } from "@measured/puck/components/DropZone";
 import { Section } from "../../components/Section";
+
+import { ComponentFields, PropsWithDropZone } from "../../types";
 
 const getClassName = getClassNameFactory("Flex", styles);
 
@@ -12,7 +12,7 @@ export type FlexProps = {
   minItemWidth: number;
 };
 
-export const Flex: ComponentConfig<FlexProps> = {
+export const flex: ComponentFields<FlexProps> = {
   fields: {
     items: {
       type: "array",
@@ -33,21 +33,26 @@ export const Flex: ComponentConfig<FlexProps> = {
     items: [{}, {}],
     minItemWidth: 356,
   },
-  render: ({ items, minItemWidth }) => {
-    return (
-      <Section>
-        <div className={getClassName()}>
-          {items.map((item, idx) => (
-            <div
-              key={idx}
-              className={getClassName("item")}
-              style={{ minWidth: item.minItemWidth || minItemWidth }}
-            >
-              <DropZone zone={`item-${idx}`} />
-            </div>
-          ))}
-        </div>
-      </Section>
-    );
-  },
 };
+
+export default function Flex({
+  items,
+  minItemWidth,
+  DropZone,
+}: PropsWithDropZone<FlexProps>) {
+  return (
+    <Section>
+      <div className={getClassName()}>
+        {items.map((item, idx) => (
+          <div
+            key={idx}
+            className={getClassName("item")}
+            style={{ minWidth: item.minItemWidth || minItemWidth }}
+          >
+            <DropZone zone={`item-${idx}`} />
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}

@@ -2,6 +2,7 @@ import React from "react";
 
 import { ComponentConfig } from "@measured/puck";
 import { Section } from "../../components/Section";
+import { ComponentFields } from "../../types";
 
 export type TextProps = {
   align: "left" | "center" | "right";
@@ -12,7 +13,7 @@ export type TextProps = {
   maxWidth?: string;
 };
 
-export const Text: ComponentConfig<TextProps> = {
+export const text: ComponentFields<TextProps> = {
   fields: {
     text: { type: "textarea" },
     size: {
@@ -47,31 +48,39 @@ export const Text: ComponentConfig<TextProps> = {
     size: "m",
     color: "default",
   },
-  render: ({ align, color, text, size, padding, maxWidth }) => {
-    return (
-      <Section padding={padding} maxWidth={maxWidth}>
-        <span
-          style={{
-            color: color === "default" ? "inherit" : "var(--puck-color-grey-4)",
-            display: "flex",
-            textAlign: align,
-            width: "100%",
-            fontSize: size === "m" ? "20px" : "16px",
-            fontWeight: 300,
-            maxWidth,
-            marginLeft: "auto",
-            marginRight: "auto",
-            justifyContent:
-              align === "center"
-                ? "center"
-                : align === "right"
-                ? "flex-end"
-                : "flex-start",
-          }}
-        >
-          {text}
-        </span>
-      </Section>
-    );
-  },
 };
+
+export default function Text({
+  align,
+  color,
+  text,
+  size,
+  padding,
+  maxWidth,
+}: TextProps) {
+  return (
+    <Section padding={padding} maxWidth={maxWidth}>
+      <span
+        style={{
+          color: color === "default" ? "inherit" : "var(--puck-color-grey-4)",
+          display: "flex",
+          textAlign: align,
+          width: "100%",
+          fontSize: size === "m" ? "20px" : "16px",
+          fontWeight: 300,
+          maxWidth,
+          marginLeft: "auto",
+          marginRight: "auto",
+          justifyContent:
+            align === "center"
+              ? "center"
+              : align === "right"
+              ? "flex-end"
+              : "flex-start",
+        }}
+      >
+        {text}
+      </span>
+    </Section>
+  );
+}

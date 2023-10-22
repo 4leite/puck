@@ -1,13 +1,12 @@
 import React from "react";
-
-import { ComponentConfig } from "@measured/puck";
 import { spacingOptions } from "../../options";
+import { ComponentFields } from "../../types";
 
 export type VerticalSpaceProps = {
   size: string;
 };
 
-export const VerticalSpace: ComponentConfig<VerticalSpaceProps> = {
+export const verticalSpace: ComponentFields<VerticalSpaceProps> = {
   fields: {
     size: {
       type: "select",
@@ -17,7 +16,8 @@ export const VerticalSpace: ComponentConfig<VerticalSpaceProps> = {
   defaultProps: {
     size: "24px",
   },
-  render: ({ size }) => {
-    return <div style={{ height: size, width: "100%" }} />;
-  },
 };
+
+export default function VerticalSpace({ size }: VerticalSpaceProps) {
+  return <div style={{ height: size, width: "100%" }} />;
+}

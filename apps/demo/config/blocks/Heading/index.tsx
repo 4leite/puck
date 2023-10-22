@@ -1,9 +1,9 @@
 import React from "react";
 
-import { ComponentConfig } from "@measured/puck";
 import { Heading as _Heading } from "@measured/puck/components/Heading";
 import type { HeadingProps as _HeadingProps } from "@measured/puck/components/Heading";
 import { Section } from "../../components/Section";
+import { ComponentFields } from "../../types";
 
 export type HeadingProps = {
   align: "left" | "center" | "right";
@@ -33,7 +33,7 @@ const levelOptions = [
   { label: "6", value: "6" },
 ];
 
-export const Heading: ComponentConfig<HeadingProps> = {
+export const heading: ComponentFields<HeadingProps> = {
   fields: {
     text: { type: "text" },
     size: {
@@ -60,15 +60,22 @@ export const Heading: ComponentConfig<HeadingProps> = {
     padding: "24px",
     size: "m",
   },
-  render: ({ align, text, size, level, padding }) => {
-    return (
-      <Section padding={padding}>
-        <_Heading size={size} rank={level as any}>
-          <span style={{ display: "block", textAlign: align, width: "100%" }}>
-            {text}
-          </span>
-        </_Heading>
-      </Section>
-    );
-  },
 };
+
+export default function Heading({
+  align,
+  text,
+  size,
+  level,
+  padding,
+}: HeadingProps) {
+  return (
+    <Section padding={padding}>
+      <_Heading size={size} rank={level as any}>
+        <span style={{ display: "block", textAlign: align, width: "100%" }}>
+          {text}
+        </span>
+      </_Heading>
+    </Section>
+  );
+}

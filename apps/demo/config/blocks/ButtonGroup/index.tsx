@@ -1,10 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
+"use client";
+
 import React from "react";
-import { ComponentConfig } from "@measured/puck";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "@measured/puck/lib";
 import { Button } from "@measured/puck/components/Button";
 import { Section } from "../../components/Section";
+import { ComponentFields } from "../../types";
 
 const getClassName = getClassNameFactory("ButtonGroup", styles);
 
@@ -13,7 +14,7 @@ export type ButtonGroupProps = {
   buttons: { label: string; href: string; variant: "primary" | "secondary" }[];
 };
 
-export const ButtonGroup: ComponentConfig<ButtonGroupProps> = {
+export const buttonGroup: ComponentFields<ButtonGroupProps> = {
   fields: {
     buttons: {
       type: "array",
@@ -46,22 +47,23 @@ export const ButtonGroup: ComponentConfig<ButtonGroupProps> = {
   defaultProps: {
     buttons: [{ label: "Learn more", href: "#", variant: "primary" }],
   },
-  render: ({ align, buttons }) => {
-    return (
-      <Section className={getClassName({ center: align === "center" })}>
-        <div className={getClassName("actions")}>
-          {buttons.map((button, i) => (
-            <Button
-              key={i}
-              href={button.href}
-              variant={button.variant}
-              size="large"
-            >
-              {button.label}
-            </Button>
-          ))}
-        </div>
-      </Section>
-    );
-  },
 };
+
+export default function ButtonGroup({ align, buttons }: ButtonGroupProps) {
+  return (
+    <Section className={getClassName({ center: align === "center" })}>
+      <div className={getClassName("actions")}>
+        {buttons.map((button, i) => (
+          <Button
+            key={i}
+            href={button.href}
+            variant={button.variant}
+            size="large"
+          >
+            {button.label}
+          </Button>
+        ))}
+      </div>
+    </Section>
+  );
+}

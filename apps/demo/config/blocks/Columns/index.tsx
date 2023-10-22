@@ -1,20 +1,19 @@
 import React from "react";
-import { ComponentConfig } from "@measured/puck/types/Config";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "@measured/puck/lib";
-import { DropZone } from "@measured/puck/components/DropZone";
 import { Section } from "../../components/Section";
+import { PropsWithDropZone, ComponentFields } from "../../types";
 
 const getClassName = getClassNameFactory("Columns", styles);
 
-export type ColumnsProps = {
+export type ColumnsProps = PropsWithDropZone<{
   distribution: "auto" | "manual";
   columns: {
     span?: number;
   }[];
-};
+}>;
 
-export const Columns: ComponentConfig<ColumnsProps> = {
+export const columns: ComponentFields<ColumnsProps> = {
   fields: {
     distribution: {
       type: "radio",
@@ -46,34 +45,40 @@ export const Columns: ComponentConfig<ColumnsProps> = {
   defaultProps: {
     distribution: "auto",
     columns: [{}, {}],
-  },
-  render: ({ columns, distribution }) => {
-    return (
-      <Section>
-        <div
-          className={getClassName()}
-          style={{
-            gridTemplateColumns:
-              distribution === "manual"
-                ? "repeat(12, 1fr)"
-                : `repeat(${columns.length}, 1fr)`,
-          }}
-        >
-          {columns.map(({ span }, idx) => (
-            <div
-              key={idx}
-              style={{
-                gridColumn:
-                  span && distribution === "manual"
-                    ? `span ${Math.max(Math.min(span, 12), 1)}`
-                    : "",
-              }}
-            >
-              <DropZone zone={`column-${idx}`} />
-            </div>
-          ))}
-        </div>
-      </Section>
-    );
+    withDropZone: true,
   },
 };
+
+export default function Columns({
+  columns,
+  distribution,
+  DropZone,
+}: ColumnsProps) {
+  return (
+    <Section>
+      <div
+        className={getClassName()}
+        style={{
+          gridTemplateColumns:
+            distribution === "manual"
+              ? "repeat(12, 1fr)"
+              : `repeat(${columns.length}, 1fr)`,
+        }}
+      >
+        {columns.map(({ span }, idx) => (
+          <div
+            key={idx}
+            style={{
+              gridColumn:
+                span && distribution === "manual"
+                  ? `span ${Math.max(Math.min(span, 12), 1)}`
+                  : "",
+            }}
+          >
+            <DropZone zone={`column-${idx}`} />
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}

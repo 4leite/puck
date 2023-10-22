@@ -25,10 +25,7 @@ export const useLocalData = (path: string) => {
   });
 
   const setData = useCallback(
-    (data: Data) => {
-      console.log(`saving to ${key}`);
-      localStorage.setItem(key, JSON.stringify(data));
-    },
+    (data: Data) => localStorage.setItem(key, JSON.stringify(data)),
     [key]
   );
 

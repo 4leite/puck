@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { ComponentConfig } from "@measured/puck/types/Config";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "@measured/puck/lib";
 import * as reactFeather from "react-feather";
+import { ComponentFields } from "../../types";
 
 const getClassName = getClassNameFactory("Card", styles);
 
@@ -22,7 +22,7 @@ const icons = Object.keys(reactFeather).reduce((acc, iconName) => {
 
 const iconOptions = Object.keys(reactFeather).map((iconName) => ({
   label: iconName,
-  value: iconName,
+  value: iconName as keyof typeof reactFeather,
 }));
 
 export type CardProps = {
@@ -32,7 +32,7 @@ export type CardProps = {
   mode: "flat" | "card";
 };
 
-export const Card: ComponentConfig<CardProps> = {
+export const card: ComponentFields<CardProps> = {
   fields: {
     title: { type: "text" },
     description: { type: "textarea" },
@@ -54,13 +54,14 @@ export const Card: ComponentConfig<CardProps> = {
     icon: "Feather",
     mode: "flat",
   },
-  render: ({ title, icon, description, mode }) => {
-    return (
-      <div className={getClassName({ [mode]: mode })}>
-        <div className={getClassName("icon")}>{icons[icon]}</div>
-        <div className={getClassName("title")}>{title}</div>
-        <div className={getClassName("description")}>{description}</div>
-      </div>
-    );
-  },
 };
+
+export default function Card({ title, icon, description, mode }: CardProps) {
+  return (
+    <div className={getClassName({ [mode]: mode })}>
+      <div className={getClassName("icon")}>{icons[icon]}</div>
+      <div className={getClassName("title")}>{title}</div>
+      <div className={getClassName("description")}>{description}</div>
+    </div>
+  );
+}

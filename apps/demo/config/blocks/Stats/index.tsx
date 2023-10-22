@@ -4,27 +4,9 @@ import { ComponentConfig } from "@measured/puck";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "@measured/puck/lib";
 import { Section } from "../../components/Section";
-import * as reactFeather from "react-feather";
+import { ComponentFields } from "../../types";
 
 const getClassName = getClassNameFactory("Stats", styles);
-
-const icons = Object.keys(reactFeather).reduce((acc, iconName) => {
-  if (typeof reactFeather[iconName] === "object") {
-    const El = reactFeather[iconName];
-
-    return {
-      ...acc,
-      [iconName]: <El />,
-    };
-  }
-
-  return acc;
-}, {});
-
-const iconOptions = Object.keys(reactFeather).map((iconName) => ({
-  label: iconName,
-  value: iconName,
-}));
 
 export type StatsProps = {
   items: {
@@ -33,7 +15,7 @@ export type StatsProps = {
   }[];
 };
 
-export const Stats: ComponentConfig<StatsProps> = {
+export const stats: ComponentFields<StatsProps> = {
   fields: {
     items: {
       type: "array",
@@ -56,18 +38,19 @@ export const Stats: ComponentConfig<StatsProps> = {
       },
     ],
   },
-  render: ({ items }) => {
-    return (
-      <Section className={getClassName()} maxWidth={"916px"}>
-        <div className={getClassName("items")}>
-          {items.map((item, i) => (
-            <div key={i} className={getClassName("item")}>
-              <div className={getClassName("label")}>{item.title}</div>
-              <div className={getClassName("value")}>{item.description}</div>
-            </div>
-          ))}
-        </div>
-      </Section>
-    );
-  },
 };
+
+export default function Stats({ items }: StatsProps) {
+  return (
+    <Section className={getClassName()} maxWidth={"916px"}>
+      <div className={getClassName("items")}>
+        {items.map((item, i) => (
+          <div key={i} className={getClassName("item")}>
+            <div className={getClassName("label")}>{item.title}</div>
+            <div className={getClassName("value")}>{item.description}</div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}

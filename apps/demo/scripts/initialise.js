@@ -64,6 +64,7 @@ const initialData = {
         props: {
           columns: [{}, {}, {}],
           distribution: "auto",
+          withDropZone: true,
           id: "Columns-2d650a8ceb081a2c04f3a2d17a7703ca6efb0d06",
         },
       },
@@ -165,6 +166,7 @@ const initialData = {
             { span: 4 },
             { span: 4 },
           ],
+          withDropZone: true,
           id: "Columns-3c2ca5b045ee26535fcdf0eddf409a6308764634",
           distribution: "manual",
         },
