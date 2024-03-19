@@ -278,7 +278,6 @@ export type UiState = {
     current: {
       width: number;
       height: number | "auto";
-      zoom: number;
     };
     controlsVisible: boolean;
     options: Viewport[];
